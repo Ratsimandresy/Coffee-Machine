@@ -43,7 +43,7 @@ const App = ({ currentOrder: { drink, sugarQuantity } }) => {
       generateMaxSugarQty();
     }
     console.log("useEffect call");
-  }, []);
+  }, [message]);
 
   return (
     <div className="App">
@@ -53,7 +53,7 @@ const App = ({ currentOrder: { drink, sugarQuantity } }) => {
           {order.sugarQtyCode}
         </p>
       )}
-      {message && <p>{message}</p>}
+      {message && <p role="contentinfo">{message}</p>}
     </div>
   );
 };
