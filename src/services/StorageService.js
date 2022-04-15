@@ -26,21 +26,16 @@ export class StorageService {
     const drinkStateInStore = [...store.filter((d) => d.type === command.type)];
     const { quantity } = drinkStateInStore[0];
     updatedDrinkState = { ...drinkStateInStore[0] };
-    console.log("drinkStateInStore ==>", drinkStateInStore);
 
     if (quantity > 0) {
       updatedDrinkState["quantity"] = quantity - 1;
     }
-
-    console.log("updatedDrinkState ==>", updatedDrinkState);
 
     updatedStore = [
       ...store.map((d) => {
         return d === drinkStateInStore[0] ? updatedDrinkState : d;
       }),
     ];
-
-    console.log("==>", updatedStore);
 
     return updatedStore;
   };

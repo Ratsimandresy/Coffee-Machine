@@ -85,11 +85,10 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
 
   const handleAddCommand = (command, store) => {
     updatedStore = updateStorage(command, store);
-    console.table(updatedStore);
+    // console.table(updatedStore);
     setStore((prevStore) => [...prevStore, updatedStore]);
     setCommands((prevCommands) => [...prevCommands, command]);
-
-    console.table(store);
+    // console.table(store);
   };
 
   // updating states
