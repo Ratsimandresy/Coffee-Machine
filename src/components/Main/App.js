@@ -1,49 +1,71 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { DrinkMakerProtocolTranslator } from "../../services/DrinkMakerProtocolTranslator";
+import { DrinkMakerProtocolService } from "../../services/DrinkMakerProtocolService";
+import { MessageService } from "../../services/MessageService";
+import { PriceService } from "../../services/PriceService";
 
-const App = ({ currentOrder: { drink, sugarQuantity } }) => {
-  const initialState = { type: "", sugarQtyCode: "", message: "" };
+const App = ({ currentOrder: { drink, sugarQuantity, money } }) => {
+  // initializing variables
+  const initialState = {
+    type: "",
+    sugarQtyCode: "",
+    message: "",
+    hasEnough: true,
+  };
+  let price, missingAmount;
 
+  // instantiating services
+  const translatorService = new DrinkMakerProtocolService();
+  const messageService = new MessageService();
+  const priceService = new PriceService();
+
+  // extracting services'methods
+  const { getPrice, getMissingAmount } = priceService;
+  const {
+    sendDrinkErrorMessage,
+    sendAmountErrorMessage,
+    sendMaxSugarErrorMessage,
+  } = messageService;
+  const { drinkProtocolTranslator, sugarQuantityProtocolTranslator } =
+    translatorService;
+
+  // declaring states;
   const [order, setOrder] = useState(initialState);
   const [message, setMessage] = useState("");
+  const [hasEnough, setHasEnough] = useState(true);
 
-  const translator = new DrinkMakerProtocolTranslator();
-
-  const {
-    drinkProtocolTranslator,
-    sugarQuantityProtocolTranslator,
-    checkDrinkType,
-  } = translator;
-
+  // declaring some functions to handle component logic and render
   const generateDrinkMakerCommands = () => {
-    return setOrder({
+    setOrder((previousOrder) => ({
+      ...previousOrder,
       type: `${drinkProtocolTranslator(drink)}`,
       sugarQtyCode: `${sugarQuantityProtocolTranslator(sugarQuantity)}`,
       message,
-    });
+      hasEnough,
+    }));
   };
 
   const generateErrorMessage = () => {
-    // setOrder(initialState);
-    return setMessage(checkDrinkType(order.type));
-  };
-
-  const generateMaxSugarQty = () => {
-    // setOrder(initialState);
-    return sugarQuantity > 5
-      ? setMessage(`${sugarQuantityProtocolTranslator(sugarQuantity)}`)
-      : null;
-  };
-
-  useEffect(() => {
-    generateErrorMessage();
-    generateDrinkMakerCommands();
-    if (order.type !== "M") {
-      generateMaxSugarQty();
+    if (missingAmount) {
+      return setMessage(sendAmountErrorMessage(missingAmount, order.type));
     }
-    console.log("useEffect call");
-  }, [message]);
+    if (order.type !== "M" && !missingAmount) {
+      return setMessage(sendMaxSugarErrorMessage(sugarQuantity));
+    }
+    return setMessage(sendDrinkErrorMessage(order.type));
+  };
+
+  const generateAmountErrorMsg = () => {
+    return setMessage(sendAmountErrorMessage(missingAmount));
+  };
+
+  // updating states
+  useEffect(() => {
+    generateDrinkMakerCommands();
+    price = getPrice(order.type);
+    missingAmount = getMissingAmount(money, price);
+    generateErrorMessage();
+  }, [message, order.type]);
 
   return (
     <div className="App">

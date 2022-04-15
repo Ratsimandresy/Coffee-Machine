@@ -10,6 +10,8 @@ describe("App component", () => {
   const container = document.createElement("div");
   const order1 = orders[0].order1;
   const order2 = orders[1].order2;
+  const order3 = orders[2].order3;
+  const order4 = orders[3].order4;
 
   beforeEach(() => {
     document.body.appendChild(container);
@@ -33,6 +35,20 @@ describe("App component", () => {
     render(<App currentOrder={order2} />);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:This drink doesn't exist yet !"
+    );
+  });
+
+  test("should render error message when user exceeds sugar quantity", () => {
+    render(<App currentOrder={order3} />);
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+      "M:Maximum sugar allowed !"
+    );
+  });
+
+  test("should render error message when user doesn't have enough money", () => {
+    render(<App currentOrder={order4} />);
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+      "M:Not enough money ! Please provide : 0.3€"
     );
   });
 });

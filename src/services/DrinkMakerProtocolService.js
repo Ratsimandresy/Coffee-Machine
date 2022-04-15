@@ -1,4 +1,4 @@
-export class DrinkMakerProtocolTranslator {
+export class DrinkMakerProtocolService {
   constructor() {}
 
   drinkProtocolTranslator = (drinkType) => {
@@ -14,19 +14,7 @@ export class DrinkMakerProtocolTranslator {
     }
   };
 
-  checkDrinkType = (drinkType) => {
-    switch (drinkType) {
-      case "M":
-        return `${drinkType}:This drink doesn't exist yet !`;
-      default:
-        return null;
-    }
-  };
-
   sugarQuantityProtocolTranslator = (quantity = 0) => {
-    if (quantity > 5) {
-      return "M:Maximum sugar allowed !";
-    }
     return quantity > 0 ? `:${quantity}:0` : "::";
   };
 }

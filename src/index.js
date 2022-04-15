@@ -6,7 +6,7 @@ import App from "./components/Main/App";
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
 
-const order = { drink: "Chocolat", sugarQuantity: 1 };
+const order = { drink: "Chocolat", sugarQuantity: 1, money: 2 };
 
 root.render(
   <React.StrictMode>
