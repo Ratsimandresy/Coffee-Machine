@@ -13,7 +13,42 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.command {
+  display: inline-block;
+  letter-spacing: 2px;
+  font-size: larger;
+  margin: 16px;
+}
 button {
   margin: 2rem;
-  padding: 5px 7px;
+  padding: 6px 9px;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.4s ease-out;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: rgb(18, 63, 95);
+}
+button:hover {
+  transform: scale(1.1);
+  color: white;
+}
+
+.report-btn {
+  background-color: rgba(210, 177, 79, 0.605);
+}
+.send-btn {
+  background-color: rgb(68, 166, 186);
+}
+.new-btn {
+  background-color: rgb(83, 177, 166);
+}
+
+.console-info {
+  letter-spacing: 1px;
+}
+
+.notification {
+  color: rgba(35, 99, 136, 0.623);
 }

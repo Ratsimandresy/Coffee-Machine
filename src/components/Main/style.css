@@ -3,8 +3,12 @@
   padding: 5rem;
 }
 .error {
+  font-weight: 500;
+  letter-spacing: 2px;
   color: rgb(178, 100, 100);
 }
 .success {
+  font-weight: 500;
+  letter-spacing: 2px;
   color: rgb(95, 161, 95);
 }

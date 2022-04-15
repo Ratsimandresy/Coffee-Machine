@@ -7,7 +7,6 @@ export class StorageService {
     const drinkStateInStore = store.find(
       (status) => status.type === command.type
     );
-
     const { quantity } = drinkStateInStore;
     switch (true) {
       case quantity > 0:

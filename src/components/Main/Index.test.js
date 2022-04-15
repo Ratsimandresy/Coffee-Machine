@@ -22,7 +22,6 @@ describe("App component", () => {
     act(() => {
       render(<App currentOrder={order1} />, container);
     });
-
     expect(container).toBeTruthy();
   });
 
@@ -35,7 +34,6 @@ describe("App component", () => {
 
   test("should render error message when drink doesn't exist", () => {
     render(<App currentOrder={order2} />);
-
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:This drink doesn't exist yet !"
     );
@@ -43,7 +41,6 @@ describe("App component", () => {
 
   test("should render error message when user exceeds sugar quantity", () => {
     render(<App currentOrder={order3} />);
-
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:Maximum sugar allowed !"
     );
@@ -51,7 +48,6 @@ describe("App component", () => {
 
   test("should render error message when user doesn't have enough money", () => {
     render(<App currentOrder={order4} />);
-
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:Not enough money ! Please provide : 0.3€"
     );
@@ -60,7 +56,6 @@ describe("App component", () => {
   test("should show information on click", () => {
     render(<App currentOrder={order1} />);
     const button = screen.getByTestId("send-btn");
-
     expect(button).toHaveTextContent("Send command");
   });
 });

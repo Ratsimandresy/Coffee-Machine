@@ -8,6 +8,7 @@ const Index = ({ commands }) => {
   const [show, setShow] = useState(false);
   const [content, setContent] = useState("Get Report");
 
+  //display report on the browse console
   const handleClick = () => {
     // showing the  daily report
     if (content === "Get Report") {
@@ -23,10 +24,18 @@ const Index = ({ commands }) => {
   };
   return (
     <>
-      <button data-testid="report-btn" onClick={() => handleClick()}>
+      <button
+        className="report-btn"
+        data-testid="report-btn"
+        onClick={() => handleClick()}
+      >
         {content}
       </button>
-      {show && <p role="contentinfo">Open the console to see the report</p>}
+      {show && (
+        <p className="console-info" role="contentinfo">
+          Open the console to see the report
+        </p>
+      )}
     </>
   );
 };

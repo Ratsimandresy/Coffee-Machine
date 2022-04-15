@@ -11,6 +11,7 @@ const initialOrder = {
   money: 0.7,
   extraHot: false,
 };
+
 const App = () => {
   const [order, setOrder] = useState(initialOrder);
 
@@ -21,7 +22,11 @@ const App = () => {
   return (
     <div className="App">
       <Main currentOrder={order} />
-      <button data-testid="new-btn" onClick={() => selectOrder()}>
+      <button
+        className="new-btn"
+        data-testid="new-btn"
+        onClick={() => selectOrder()}
+      >
         Make new command
       </button>
     </div>

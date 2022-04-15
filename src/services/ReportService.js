@@ -1,6 +1,4 @@
 export class ReportService {
-  soldDrink;
-
   getTotalDrink = (ordersArray = []) => {
     return ordersArray.filter((order) => order.isPrepared).length;
   };
@@ -11,7 +9,6 @@ export class ReportService {
       .reduce((total, { price }) => {
         return total + price;
       }, 0);
-
     return Number(total).toFixed(2);
   };
 }

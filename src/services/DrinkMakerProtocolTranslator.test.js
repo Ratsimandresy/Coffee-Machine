@@ -19,12 +19,10 @@ describe("command maker service", () => {
 
   it("should return the right drink protocol code including extra hot option", () => {
     spy("drinkProtocolTranslator");
-
     expect(service.drinkProtocolTranslator("Thé", false)).toEqual("T");
     expect(service.drinkProtocolTranslator("Café", true)).toEqual("Ch");
     expect(service.drinkProtocolTranslator("Coca")).toEqual("M");
     expect(service.drinkProtocolTranslator("Orange juice")).toEqual("O");
-
     expect(service.drinkProtocolTranslator).toHaveBeenCalledTimes(4);
   });
 

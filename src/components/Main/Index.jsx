@@ -17,7 +17,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     price: null,
     isPrepared: false,
   };
-  let updatedStore, index, drinkStatus;
+  let index, drinkStatus;
 
   // instantiating services
   const translatorService = new DrinkMakerProtocolService();
@@ -77,6 +77,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     }
 
     setIsPrepared(true);
+
     return setMessage(
       sendDrinkIsPreparedMessage(
         command.isPrepared,
@@ -102,7 +103,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     if (checkStorage(command, store)) {
       setCommands((prevCommands) => [...prevCommands, command]);
     }
-
+    // display email notification
     if (!checkStorage(command, store)) {
       setNotification({
         content: sendEmailNotification(command, store, getDrink(command.type)),
@@ -136,7 +137,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     <div>
       {isPrepared && (
         <>
-          <strong>
+          <strong className="command">
             {command.type}
             {command.sugarQtyCode}
           </strong>
@@ -155,6 +156,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
       )}
       {isPrepared && (
         <button
+          className="send-btn"
           data-testid="send-btn"
           onClick={() => BeverageQuantityChecker(command, store)}
         >

@@ -4,8 +4,6 @@ import { act } from "react-dom/test-utils";
 import "@testing-library/jest-dom/extend-expect";
 import App from "./App";
 
-// const { commands } = require("../../assets/mock/mockData");
-
 describe("Report button component", () => {
   const container = document.createElement("div");
   beforeEach(() => {
@@ -17,14 +15,12 @@ describe("Report button component", () => {
     act(() => {
       render(<App />, container);
     });
-
     expect(container).toBeTruthy();
   });
 
   test("should show information on click", () => {
     render(<App />);
     const button = screen.getByTestId("new-btn");
-
     expect(button).toHaveTextContent("Make new command");
   });
 });

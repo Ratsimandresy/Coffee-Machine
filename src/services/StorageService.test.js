@@ -7,7 +7,6 @@ describe("command maker service", () => {
 
   const command1 = commands[0];
   const command2 = commands[1];
-  const command6 = commands[5];
 
   beforeEach(() => {
     service = new StorageService();
@@ -44,6 +43,7 @@ describe("command maker service", () => {
     spy("getIndexToBeRemoved");
     expect(service.getIndexToBeRemoved(command1, store)).toEqual(0);
     expect(service.getIndexToBeRemoved(command2, store)).toEqual(1);
+    expect(service.getIndexToBeRemoved).toHaveBeenCalledTimes(2);
   });
 
   it("should update drink status", () => {
@@ -57,5 +57,6 @@ describe("command maker service", () => {
       type: "Ch",
       quantity: 0,
     });
+    expect(service.updatedDrinkStatus).toHaveBeenCalledTimes(2);
   });
 });
