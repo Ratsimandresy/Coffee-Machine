@@ -100,7 +100,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   ]);
 
   return (
-    <div className="App">
+    <div>
       {isPrepared && (
         <>
           <strong>
@@ -108,10 +108,10 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
             {command.sugarQtyCode}
           </strong>
           <br></br>
-          <br></br>
+
           <small className="success">{message}</small>
           <br></br>
-          <br></br>
+
           <ReportButton commands={commands} />
         </>
       )}
@@ -120,7 +120,9 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
           {message}
         </p>
       )}
-      <button onClick={() => handleAddCommand(command)}>add command</button>
+      <button role="button" onClick={() => handleAddCommand(command)}>
+        Send command
+      </button>
     </div>
   );
 };

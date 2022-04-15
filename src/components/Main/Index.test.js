@@ -8,10 +8,10 @@ const { orders } = require("../../assets/mock/mockData");
 
 describe("App component", () => {
   const container = document.createElement("div");
-  const order1 = orders[0].order1;
-  const order2 = orders[1].order2;
-  const order3 = orders[2].order3;
-  const order4 = orders[3].order4;
+  const order1 = orders[0];
+  const order2 = orders[1];
+  const order3 = orders[2];
+  const order4 = orders[3];
 
   beforeEach(() => {
     document.body.appendChild(container);
@@ -50,6 +50,13 @@ describe("App component", () => {
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:Not enough money ! Please provide : 0.3€"
     );
+  });
+
+  test("should show information on click", () => {
+    render(<App currentOrder={order1} />);
+    const button = screen.getByRole("button");
+
+    expect(button).toHaveTextContent("Send command");
   });
 });
 
