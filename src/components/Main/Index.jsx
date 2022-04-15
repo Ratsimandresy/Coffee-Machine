@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "./style.css";
 import { DrinkMakerProtocolService } from "../../services/DrinkMakerProtocolService";
 import { MessageService } from "../../services/MessageService";
 import { PriceService } from "../../services/PriceService";
@@ -7,7 +7,7 @@ import ReportButton from "../reportButton/Index.jsx";
 
 // const { commands } = require("../../assets/mock/mockData");
 
-const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
+const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   // initializing and declaring some variables
   const initialState = {
     type: "",
@@ -35,6 +35,7 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
 
   // declaring states;
   const [command, setCommand] = useState(initialState);
+  const [commands, setCommands] = useState([]);
   const [message, setMessage] = useState(null);
   const [price, setPrice] = useState(null);
   const [isPrepared, setIsPrepared] = useState(false);
@@ -77,6 +78,11 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     );
   };
 
+  const handleAddCommand = (command) => {
+    setCommands((prevCommands) => [...prevCommands, command]);
+    // console.table(commands);
+  };
+
   // updating states
   useEffect(() => {
     generateDrinkMakerCommands();
@@ -106,7 +112,7 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
           <small className="success">{message}</small>
           <br></br>
           <br></br>
-          <ReportButton />
+          <ReportButton commands={commands} />
         </>
       )}
       {!isPrepared && (
@@ -114,8 +120,9 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
           {message}
         </p>
       )}
+      <button onClick={() => handleAddCommand(command)}>add command</button>
     </div>
   );
 };
 
-export default App;
+export default Index;

@@ -9,6 +9,13 @@ const Index = ({ commands }) => {
   const [content, setContent] = useState("Get Report");
 
   const handleClick = () => {
+    // showing the  daily report
+    if (content === "Get Report") {
+      console.log(`Number of total drinks sold : ${getTotalDrink(commands)}`);
+      console.log(`Total money earned today : ${getTotalEarned(commands)}`);
+      console.table(commands.length ? commands : "No drinks sold yet !");
+    }
+
     setShow(!show);
     return content === "Get Report"
       ? setContent("hide info")
@@ -16,8 +23,10 @@ const Index = ({ commands }) => {
   };
   return (
     <>
-      <button onClick={() => handleClick()}>{content}</button>
-      {show && <p>Open the console to see the report</p>}
+      <button role="button" onClick={() => handleClick()}>
+        {content}
+      </button>
+      {show && <p role="contentinfo">Open the console to see the report</p>}
     </>
   );
 };

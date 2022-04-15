@@ -23,7 +23,7 @@ describe("Report service", () => {
 
   it("should return the total amount of sold drink", () => {
     spy("getTotalEarned");
-    expect(service.getTotalEarned(commands)).toEqual(3.6);
+    expect(service.getTotalEarned(commands)).toEqual(Number(3.6).toFixed(2));
     expect(service.getTotalEarned).toHaveBeenCalledTimes(1);
   });
 });
