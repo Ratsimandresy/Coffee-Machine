@@ -106,7 +106,6 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     command.price,
     missingAmount,
     money,
-    store,
   ]);
 
   return (

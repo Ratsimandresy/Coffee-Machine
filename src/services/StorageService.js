@@ -37,6 +37,10 @@ export class StorageService {
       }),
     ];
 
+    // updatedStore = store.map((d) =>
+    //   d.type === command.type ? (d["quantity"] -= 1) : d["quantity"]
+    // );
+
     return updatedStore;
   };
 }
