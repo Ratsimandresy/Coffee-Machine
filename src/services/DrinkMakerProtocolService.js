@@ -14,6 +14,27 @@ export class DrinkMakerProtocolService {
     }
   };
 
+  getDrink = (type) => {
+    switch (type) {
+      case "T":
+        return "Thé";
+      case "Th":
+        return "Thé extra hot";
+      case "C":
+        return "Café";
+      case "Ch":
+        return "Café extra hot";
+      case "H":
+        return "Chocolat";
+      case "Hh":
+        return "Chocolat extra hot";
+      case "O":
+        return "Orange juice";
+      default:
+        break;
+    }
+  };
+
   sugarQuantityProtocolTranslator = (quantity = 0) => {
     return quantity > 0 ? `:${quantity}:0` : "::";
   };

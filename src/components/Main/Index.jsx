@@ -17,7 +17,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     price: null,
     isPrepared: false,
   };
-  let updatedStore;
+  let updatedStore, index, drinkStatus;
 
   // instantiating services
   const translatorService = new DrinkMakerProtocolService();
@@ -27,14 +27,16 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
 
   // extracting services'methods
   const { getPrice, getMissingAmount } = priceService;
-  const { getStorage, checkStorage, updateStorage } = storageService;
+  const { getStorage, checkStorage, updatedDrinkStatus, getIndexToBeRemoved } =
+    storageService;
   const {
     sendDrinkErrorMessage,
     sendAmountErrorMessage,
     sendMaxSugarErrorMessage,
     sendDrinkIsPreparedMessage,
+    sendEmailNotification,
   } = messageService;
-  const { drinkProtocolTranslator, sugarQuantityProtocolTranslator } =
+  const { drinkProtocolTranslator, sugarQuantityProtocolTranslator, getDrink } =
     translatorService;
 
   // declaring states;
@@ -45,6 +47,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   const [isPrepared, setIsPrepared] = useState(false);
   const [missingAmount, setMissingAmount] = useState(0);
   const [store, setStore] = useState([]);
+  const [notification, setNotification] = useState({ content: null });
 
   // declaring some functions to handle component logic and render
   const generateDrinkMakerCommands = () => {
@@ -84,27 +87,32 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     );
   };
 
-  const handleAddCommand = (command, store) => {
-    updatedStore = updateStorage(command, store);
-    // console.table(updatedStore);
-    setStore((prevStore) => [...prevStore, updatedStore]);
-    setCommands([
-      store.map((d) => {
-        const { type, quantity } = d;
-        if (d.type === command.type) {
-          switch (true) {
-            case quantity > 0:
-              return (d = { type, quantity: d.quantity - 1 });
-            case quantity === 0:
-              return d;
-            default:
-              break;
-          }
-        } else {
-          return d;
-        }
-      }),
+  const BeverageQuantityChecker = (command, store) => {
+    index = getIndexToBeRemoved(command, store);
+    drinkStatus = store[index];
+
+    //updating the store
+    setStore((prevStore) => [
+      ...prevStore.slice(0, index),
+      ...prevStore.slice(index + 1),
     ]);
+    setStore((prevStore) => [...prevStore, updatedDrinkStatus(drinkStatus)]);
+
+    //send the report
+    if (checkStorage(command, store)) {
+      setCommands((prevCommands) => [...prevCommands, command]);
+    }
+
+    if (!checkStorage(command, store)) {
+      setNotification({
+        content: sendEmailNotification(command, store, getDrink(command.type)),
+      });
+      setTimeout(() => {
+        setNotification({ content: null });
+      }, 4000);
+    }
+
+    // uncomment to see the update of the store when sending a command
     // console.table(store);
   };
 
@@ -148,10 +156,13 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
       {isPrepared && (
         <button
           data-testid="send-btn"
-          onClick={() => handleAddCommand(command, store)}
+          onClick={() => BeverageQuantityChecker(command, store)}
         >
           Send command
         </button>
+      )}
+      {notification && (
+        <div className="notification">{notification.content}</div>
       )}
     </div>
   );

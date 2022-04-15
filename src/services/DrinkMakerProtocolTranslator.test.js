@@ -33,6 +33,13 @@ describe("command maker service", () => {
     expect(service.sugarQuantityProtocolTranslator(1)).toEqual(":1:0");
     expect(service.sugarQuantityProtocolTranslator).toHaveBeenCalled();
   });
+
+  it("should return the drink depending of the type received", () => {
+    spy("getDrink");
+    expect(service.getDrink("Th")).toEqual("Thé extra hot");
+    expect(service.getDrink("O")).toEqual("Orange juice");
+    expect(service.getDrink).toHaveBeenCalledTimes(2);
+  });
 });
 
 // https://stackoverflow.com/questions/50091438/jest-how-to-mock-one-specific-method-of-a-class

@@ -40,39 +40,22 @@ describe("command maker service", () => {
     expect(service.checkStorage).toHaveBeenCalledTimes(2);
   });
 
-  it("should update the storage when a drink is available", () => {
-    spy("updateStorage");
+  it("should return the index of the option to be removed", () => {
+    spy("getIndexToBeRemoved");
+    expect(service.getIndexToBeRemoved(command1, store)).toEqual(0);
+    expect(service.getIndexToBeRemoved(command2, store)).toEqual(1);
+  });
 
-    expect(service.updateStorage(command1, store)).toEqual([
-      { type: "T", quantity: 3 },
-      { type: "C", quantity: 0 },
-      { type: "H", quantity: 4 },
-      { type: "O", quantity: 4 },
-      { type: "Th", quantity: 3 },
-      { type: "Ch", quantity: 0 },
-      { type: "Hh", quantity: 4 },
-    ]);
+  it("should update drink status", () => {
+    spy("updatedDrinkStatus");
 
-    expect(service.updateStorage(command2, store)).toEqual([
-      { type: "T", quantity: 4 },
-      { type: "C", quantity: 0 },
-      { type: "H", quantity: 4 },
-      { type: "O", quantity: 4 },
-      { type: "Th", quantity: 3 },
-      { type: "Ch", quantity: 0 },
-      { type: "Hh", quantity: 4 },
-    ]);
-
-    expect(service.updateStorage(command6, store)).toEqual([
-      { type: "T", quantity: 4 },
-      { type: "C", quantity: 0 },
-      { type: "H", quantity: 4 },
-      { type: "O", quantity: 3 },
-      { type: "Th", quantity: 3 },
-      { type: "Ch", quantity: 0 },
-      { type: "Hh", quantity: 4 },
-    ]);
-
-    expect(service.updateStorage).toHaveBeenCalledTimes(3);
+    expect(service.updatedDrinkStatus({ type: "T", quantity: 4 })).toEqual({
+      type: "T",
+      quantity: 3,
+    });
+    expect(service.updatedDrinkStatus({ type: "Ch", quantity: 0 })).toEqual({
+      type: "Ch",
+      quantity: 0,
+    });
   });
 });

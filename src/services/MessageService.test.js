@@ -1,8 +1,11 @@
 import { MessageService } from "./MessageService";
+const { commands, store } = require("../assets/mock/mockData");
 
 describe("Price service", () => {
   let service;
   let spy;
+
+  const command2 = commands[1];
 
   beforeEach(() => {
     service = new MessageService();
@@ -50,5 +53,13 @@ describe("Price service", () => {
     );
     expect(service.sendMaxSugarErrorMessage(2, "H")).toBeFalsy();
     expect(service.sendMaxSugarErrorMessage).toHaveBeenCalledTimes(2);
+  });
+
+  it("should indicate the shortage and that a notification has been sent", () => {
+    spy("sendEmailNotification");
+    expect(service.sendEmailNotification(command2, store, "Café")).toEqual(
+      "Sorry, we are running out of : Café. A notification has been sent to your email address :)"
+    );
+    expect(service.sendEmailNotification).toHaveBeenCalledTimes(1);
   });
 });

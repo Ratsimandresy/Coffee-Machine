@@ -28,4 +28,20 @@ export class MessageService {
 
   sendMaxSugarErrorMessage = (sugarQty, drinkType) =>
     sugarQty > 5 && drinkType !== "M" ? "M:Maximum sugar allowed !" : null;
+
+  sendEmailNotification = (command, store, drink) => {
+    const drinkStateInStore = store.find(
+      (status) => status.type === command.type
+    );
+
+    const { quantity } = drinkStateInStore;
+    switch (true) {
+      case quantity > 0:
+        return null;
+      case quantity === 0:
+        return `Sorry, we are running out of : ${drink}. A notification has been sent to your email address :)`;
+      default:
+        break;
+    }
+  };
 }

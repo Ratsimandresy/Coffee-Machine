@@ -5,7 +5,7 @@ export class StorageService {
 
   checkStorage = (command, store = []) => {
     const drinkStateInStore = store.find(
-      (drink) => drink.type === command.type
+      (status) => status.type === command.type
     );
 
     const { quantity } = drinkStateInStore;
@@ -19,25 +19,14 @@ export class StorageService {
     }
   };
 
-  updateStorage = (command, store = []) => {
-    let updatedStore;
+  getIndexToBeRemoved = (command, store) => {
+    const drinkStatus = store.find((status) => status.type === command.type);
+    const index = store.indexOf(drinkStatus);
+    return index;
+  };
 
-    updatedStore = store.map((d) => {
-      const { type, quantity } = d;
-      if (d.type === command.type) {
-        switch (true) {
-          case quantity > 0:
-            return (d = { type, quantity: d.quantity - 1 });
-          case quantity === 0:
-            return d;
-          default:
-            break;
-        }
-      } else {
-        return d;
-      }
-    });
-
-    return updatedStore;
+  updatedDrinkStatus = (order) => {
+    const { type, quantity } = order;
+    return quantity > 0 ? { type, quantity: quantity - 1 } : order;
   };
 }
