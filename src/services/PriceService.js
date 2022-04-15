@@ -1,8 +1,4 @@
 export class PriceService {
-  constructor() {}
-
-  test = (text) => text;
-
   getPrice = (drinkType) => {
     switch (drinkType) {
       case "T":

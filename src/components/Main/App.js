@@ -10,9 +10,7 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     type: "",
     sugarQtyCode: "",
     message: "",
-    hasEnough: true,
   };
-  let price, missingAmount;
 
   // instantiating services
   const translatorService = new DrinkMakerProtocolService();
@@ -32,7 +30,8 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   // declaring states;
   const [order, setOrder] = useState(initialState);
   const [message, setMessage] = useState("");
-  const [hasEnough, setHasEnough] = useState(true);
+  const [price, setPrice] = useState(0);
+  const [missingAmount, setMissingAmount] = useState(0);
 
   // declaring some functions to handle component logic and render
   const generateDrinkMakerCommands = () => {
@@ -41,7 +40,6 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
       type: `${drinkProtocolTranslator(drink, extraHot)}`,
       sugarQtyCode: `${sugarQuantityProtocolTranslator(sugarQuantity)}`,
       message,
-      hasEnough,
     }));
   };
 
@@ -58,10 +56,10 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   // updating states
   useEffect(() => {
     generateDrinkMakerCommands();
-    price = getPrice(order.type);
-    missingAmount = getMissingAmount(money, price);
+    setPrice(getPrice(order.type));
+    setMissingAmount(getMissingAmount(money, price));
     generateErrorMessage();
-  }, [message, order.type]);
+  }, [message, order.type, price, missingAmount, money]);
 
   return (
     <div className="App">

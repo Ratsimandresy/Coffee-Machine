@@ -1,6 +1,4 @@
 export class MessageService {
-  constructor() {}
-
   sendDrinkErrorMessage = (drinkType) => {
     switch (drinkType) {
       case "M":

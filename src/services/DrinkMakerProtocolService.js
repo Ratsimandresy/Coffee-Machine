@@ -1,6 +1,4 @@
 export class DrinkMakerProtocolService {
-  constructor() {}
-
   drinkProtocolTranslator = (drink, extra) => {
     switch (drink) {
       case "Thé":

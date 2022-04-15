@@ -4,13 +4,6 @@ describe("Price service", () => {
   const service = new PriceService();
   const spy = (method) => jest.spyOn(service, method);
 
-  it("should call the test method", () => {
-    spy("test");
-    const method = service.test;
-    expect(service.test("test")).toEqual("test");
-    expect(method).toHaveBeenCalledTimes(1);
-  });
-
   it("should get the right price when receiving drink type", () => {
     spy("getPrice");
     expect(service.getPrice("T")).toEqual(0.4);
