@@ -1,8 +1,21 @@
 import { DrinkMakerProtocolService } from "./DrinkMakerProtocolService";
 
 describe("command maker service", () => {
-  const service = new DrinkMakerProtocolService();
-  const spy = (method) => jest.spyOn(service, method);
+  let service;
+  let spy;
+
+  beforeEach(() => {
+    service = new DrinkMakerProtocolService();
+    spy = (method) => jest.spyOn(service, method);
+  });
+
+  it("should instantiate the service class", () => {
+    expect(service).toBeTruthy();
+  });
+
+  it("should instantiate the service class", () => {
+    expect(service).toBeTruthy();
+  });
 
   it("should return the right drink protocol code including extra hot option", () => {
     spy("drinkProtocolTranslator");

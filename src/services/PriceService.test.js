@@ -1,8 +1,17 @@
 import { PriceService } from "./PriceService";
 
 describe("Price service", () => {
-  const service = new PriceService();
-  const spy = (method) => jest.spyOn(service, method);
+  let service;
+  let spy;
+
+  beforeEach(() => {
+    service = new PriceService();
+    spy = (method) => jest.spyOn(service, method);
+  });
+
+  it("should instantiate the service class", () => {
+    expect(service).toBeTruthy();
+  });
 
   it("should get the right price when receiving drink type", () => {
     spy("getPrice");

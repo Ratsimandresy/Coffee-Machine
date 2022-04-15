@@ -1,11 +1,15 @@
 export class ReportService {
+  soldDrink;
+
   getTotalDrink = (ordersArray = []) => {
-    return ordersArray.filter((order) => order.message === null).length;
+    return ordersArray.filter((order) => order.isPrepared).length;
   };
 
   getTotalEarned = (ordersArray = []) => {
-    return ordersArray.reduce((acc, cur) => {
-      acc.price + cur.price;
-    }, 0);
+    return ordersArray
+      .filter((order) => order.isPrepared)
+      .reduce((total, { price }) => {
+        return total + price;
+      }, 0);
   };
 }

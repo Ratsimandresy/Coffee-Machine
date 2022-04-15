@@ -1,8 +1,17 @@
 import { MessageService } from "./MessageService";
 
 describe("Price service", () => {
-  const service = new MessageService();
-  const spy = (method) => jest.spyOn(service, method);
+  let service;
+  let spy;
+
+  beforeEach(() => {
+    service = new MessageService();
+    spy = (method) => jest.spyOn(service, method);
+  });
+
+  it("should instantiate the service class", () => {
+    expect(service).toBeTruthy();
+  });
 
   it("should send the drink error message if a drink doesn't exists", () => {
     const type = "M";

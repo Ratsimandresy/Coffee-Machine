@@ -3,6 +3,9 @@ import "./App.css";
 import { DrinkMakerProtocolService } from "../../services/DrinkMakerProtocolService";
 import { MessageService } from "../../services/MessageService";
 import { PriceService } from "../../services/PriceService";
+import ReportButton from "../reportButton/Index.jsx";
+
+// const { commands } = require("../../assets/mock/mockData");
 
 const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   // initializing and declaring some variables
@@ -99,10 +102,18 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
             {command.sugarQtyCode}
           </strong>
           <br></br>
-          <small>{message}</small>
+          <br></br>
+          <small className="success">{message}</small>
+          <br></br>
+          <br></br>
+          <ReportButton />
         </>
       )}
-      {!isPrepared && <p role="contentinfo">{message}</p>}
+      {!isPrepared && (
+        <p role="contentinfo" className="error">
+          {message}
+        </p>
+      )}
     </div>
   );
 };

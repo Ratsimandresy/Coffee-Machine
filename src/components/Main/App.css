@@ -2,3 +2,9 @@
   text-align: center;
   padding: 5rem;
 }
+.error {
+  color: rgb(178, 100, 100);
+}
+.success {
+  color: rgb(95, 161, 95);
+}
