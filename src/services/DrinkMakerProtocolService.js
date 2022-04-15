@@ -1,14 +1,16 @@
 export class DrinkMakerProtocolService {
   constructor() {}
 
-  drinkProtocolTranslator = (drinkType) => {
-    switch (drinkType) {
+  drinkProtocolTranslator = (drink, extra) => {
+    switch (drink) {
       case "Thé":
-        return "T";
+        return extra ? "Th" : "T";
       case "Café":
-        return "C";
+        return extra ? "Ch" : "C";
       case "Chocolat":
-        return "H";
+        return extra ? "Hh" : "H";
+      case "Orange juice":
+        return "O";
       default:
         return "M";
     }

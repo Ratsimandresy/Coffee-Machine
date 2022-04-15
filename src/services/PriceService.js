@@ -11,6 +11,8 @@ export class PriceService {
         return 0.6;
       case "H":
         return 0.5;
+      case "O":
+        return 0.6;
       default:
         return null;
     }

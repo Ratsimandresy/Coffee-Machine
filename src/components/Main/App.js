@@ -4,8 +4,8 @@ import { DrinkMakerProtocolService } from "../../services/DrinkMakerProtocolServ
 import { MessageService } from "../../services/MessageService";
 import { PriceService } from "../../services/PriceService";
 
-const App = ({ currentOrder: { drink, sugarQuantity, money } }) => {
-  // initializing variables
+const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
+  // initializing and declaring some variables
   const initialState = {
     type: "",
     sugarQtyCode: "",
@@ -38,7 +38,7 @@ const App = ({ currentOrder: { drink, sugarQuantity, money } }) => {
   const generateDrinkMakerCommands = () => {
     setOrder((previousOrder) => ({
       ...previousOrder,
-      type: `${drinkProtocolTranslator(drink)}`,
+      type: `${drinkProtocolTranslator(drink, extraHot)}`,
       sugarQtyCode: `${sugarQuantityProtocolTranslator(sugarQuantity)}`,
       message,
       hasEnough,
@@ -53,10 +53,6 @@ const App = ({ currentOrder: { drink, sugarQuantity, money } }) => {
       return setMessage(sendMaxSugarErrorMessage(sugarQuantity));
     }
     return setMessage(sendDrinkErrorMessage(order.type));
-  };
-
-  const generateAmountErrorMsg = () => {
-    return setMessage(sendAmountErrorMessage(missingAmount));
   };
 
   // updating states

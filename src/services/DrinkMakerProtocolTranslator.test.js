@@ -1,16 +1,18 @@
 import { DrinkMakerProtocolService } from "./DrinkMakerProtocolService";
 
 describe("command maker service", () => {
-  const text = "this is the text";
-  const service = new DrinkMakerProtocolService(text);
+  const service = new DrinkMakerProtocolService();
   const spy = (method) => jest.spyOn(service, method);
 
-  it("should return the right drink protocol code", () => {
+  it("should return the right drink protocol code including extra hot option", () => {
     spy("drinkProtocolTranslator");
-    expect(service.drinkProtocolTranslator("Thé")).toEqual("T");
-    expect(service.drinkProtocolTranslator("Café")).toEqual("C");
+
+    expect(service.drinkProtocolTranslator("Thé", false)).toEqual("T");
+    expect(service.drinkProtocolTranslator("Café", true)).toEqual("Ch");
     expect(service.drinkProtocolTranslator("Coca")).toEqual("M");
-    expect(service.drinkProtocolTranslator).toHaveBeenCalledTimes(3);
+    expect(service.drinkProtocolTranslator("Orange juice")).toEqual("O");
+
+    expect(service.drinkProtocolTranslator).toHaveBeenCalledTimes(4);
   });
 
   it("should return the sugar quantity protocol code", () => {
