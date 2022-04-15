@@ -53,6 +53,13 @@ module.exports = {
     },
 
     { drink: "Thé", sugarQuantity: 2, money: 0.4, extraHot: true },
+    { drink: "Orange juice", sugarQuantity: 2, money: 0.8, extraHot: false },
+    { drink: "Chocolat", sugarQuantity: 1, money: 0.7, extraHot: false },
+    { drink: "Café", sugarQuantity: 0, money: 0.6, extraHot: true },
+    { drink: "Thé", sugarQuantity: 4, money: 0.4, extraHot: false },
+    { drink: "Orange juice", sugarQuantity: 1, money: 0.6, extraHot: true },
+    { drink: "Chocolat", sugarQuantity: 0, money: 2, extraHot: true },
+    { drink: "Café", sugarQuantity: 5, money: 5, extraHot: false },
   ],
   commands: [
     {
