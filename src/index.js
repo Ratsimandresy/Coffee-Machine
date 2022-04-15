@@ -8,8 +8,8 @@ const root = ReactDOM.createRoot(rootElement);
 
 const order = {
   drink: "Orange juice",
-  sugarQuantity: 4,
-  money: 2,
+  sugarQuantity: 3,
+  money: 0.7,
   extraHot: false,
 };
 

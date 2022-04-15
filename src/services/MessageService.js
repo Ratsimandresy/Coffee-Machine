@@ -8,6 +8,15 @@ export class MessageService {
     }
   };
 
+  sendDrinkIsPreparedMessage = (isPrepared, type, missingAmount, sugarQty) => {
+    if (!isPrepared) {
+      return null;
+    }
+    if (isPrepared && type !== "M" && !missingAmount && sugarQty <= 5) {
+      return "M:Your drink is being prepared :-)";
+    }
+  };
+
   sendAmountErrorMessage = (missingAmount, drinkType) => {
     if (!missingAmount) {
       return null;

@@ -9,7 +9,9 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   const initialState = {
     type: "",
     sugarQtyCode: "",
-    message: "",
+    message: null,
+    price: null,
+    isPrepared: false,
   };
 
   // instantiating services
@@ -23,53 +25,84 @@ const App = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     sendDrinkErrorMessage,
     sendAmountErrorMessage,
     sendMaxSugarErrorMessage,
+    sendDrinkIsPreparedMessage,
   } = messageService;
   const { drinkProtocolTranslator, sugarQuantityProtocolTranslator } =
     translatorService;
 
   // declaring states;
-  const [order, setOrder] = useState(initialState);
-  const [message, setMessage] = useState("");
-  const [price, setPrice] = useState(0);
+  const [command, setCommand] = useState(initialState);
+  const [message, setMessage] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [isPrepared, setIsPrepared] = useState(false);
   const [missingAmount, setMissingAmount] = useState(0);
 
   // declaring some functions to handle component logic and render
   const generateDrinkMakerCommands = () => {
-    setOrder((previousOrder) => ({
-      ...previousOrder,
+    setCommand((previousCommand) => ({
+      ...previousCommand,
       type: `${drinkProtocolTranslator(drink, extraHot)}`,
       sugarQtyCode: `${sugarQuantityProtocolTranslator(sugarQuantity)}`,
       message,
+      isPrepared,
+      price: price,
     }));
   };
 
-  const generateErrorMessage = () => {
+  const generateMessage = () => {
     if (missingAmount) {
-      return setMessage(sendAmountErrorMessage(missingAmount, order.type));
+      setIsPrepared(false);
+      return setMessage(sendAmountErrorMessage(missingAmount, command.type));
     }
-    if (order.type !== "M" && !missingAmount) {
+    if (command.type !== "M" && !missingAmount && sugarQuantity > 5) {
+      setIsPrepared(false);
       return setMessage(sendMaxSugarErrorMessage(sugarQuantity));
     }
-    return setMessage(sendDrinkErrorMessage(order.type));
+    if (command.type === "M") {
+      setIsPrepared(false);
+      return setMessage(sendDrinkErrorMessage(command.type));
+    }
+
+    setIsPrepared(true);
+    return setMessage(
+      sendDrinkIsPreparedMessage(
+        command.isPrepared,
+        command.type,
+        missingAmount,
+        sugarQuantity
+      )
+    );
   };
 
   // updating states
   useEffect(() => {
     generateDrinkMakerCommands();
-    setPrice(getPrice(order.type));
+    setPrice(getPrice(command.type));
     setMissingAmount(getMissingAmount(money, price));
-    generateErrorMessage();
-  }, [message, order.type, price, missingAmount, money]);
+    generateMessage();
+  }, [
+    message,
+    command.type,
+    command.message,
+    price,
+    command.price,
+    missingAmount,
+    money,
+  ]);
 
   return (
     <div className="App">
-      {!message && (
-        <p>
-          {order.type}
-          {order.sugarQtyCode}
-        </p>
+      {isPrepared && (
+        <>
+          <strong>
+            {command.type}
+            {command.sugarQtyCode}
+          </strong>
+          <br></br>
+          <small>{message}</small>
+        </>
       )}
-      {message && <p role="contentinfo">{message}</p>}
+      {!isPrepared && <p role="contentinfo">{message}</p>}
     </div>
   );
 };

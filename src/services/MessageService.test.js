@@ -23,6 +23,17 @@ describe("Price service", () => {
     expect(service.sendAmountErrorMessage).toHaveBeenCalledTimes(2);
   });
 
+  it("should send a success message when drink is ready bo te brewed", () => {
+    spy("sendDrinkIsPreparedMessage");
+    expect(service.sendDrinkIsPreparedMessage(true, "C", 0, 3)).toEqual(
+      "M:Your drink is being prepared :-)"
+    );
+    expect(service.sendDrinkIsPreparedMessage(false, "C", 0.3, 3)).toEqual(
+      null
+    );
+    expect(service.sendDrinkIsPreparedMessage).toHaveBeenCalledTimes(2);
+  });
+
   it("should send the Max sugar qty error message if more than 5 sugar quantity", () => {
     spy("sendMaxSugarErrorMessage");
     expect(service.sendMaxSugarErrorMessage(6, "T")).toEqual(
