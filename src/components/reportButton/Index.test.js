@@ -23,7 +23,7 @@ describe("Report button component", () => {
 
   test("should show information on click", () => {
     render(<ReportButton commands={commands} />);
-    const button = screen.getByRole("button");
+    const button = screen.getByTestId("report-btn");
 
     expect(button).toHaveTextContent("Get Report");
 

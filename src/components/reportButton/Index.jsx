@@ -23,7 +23,7 @@ const Index = ({ commands }) => {
   };
   return (
     <>
-      <button role="button" onClick={() => handleClick()}>
+      <button data-testid="report-btn" onClick={() => handleClick()}>
         {content}
       </button>
       {show && <p role="contentinfo">Open the console to see the report</p>}

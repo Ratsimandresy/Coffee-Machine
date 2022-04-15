@@ -21,7 +21,7 @@ const App = () => {
   return (
     <div className="App">
       <Main currentOrder={order} />
-      <button role="button" onClick={() => selectOrder()}>
+      <button data-testid="new-btn" onClick={() => selectOrder()}>
         Make new command
       </button>
     </div>

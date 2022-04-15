@@ -1,4 +1,13 @@
 module.exports = {
+  store: [
+    { type: "T", quantity: 3 },
+    { type: "C", quantity: 4 },
+    { type: "H", quantity: 4 },
+    { type: "O", quantity: 4 },
+    { type: "Th", quantity: 3 },
+    { type: "Ch", quantity: 4 },
+    { type: "Hh", quantity: 4 },
+  ],
   orders: [
     { drink: "Thé", sugarQuantity: 1, money: 1, extraHot: false },
     { drink: "Coca", sugarQuantity: 1, money: 0.6, extraHot: false },
@@ -98,7 +107,7 @@ module.exports = {
       isPrepared: false,
     },
     {
-      type: "Hh",
+      type: "H",
       sugarQtyCode: ":3:0",
       message: null,
       price: 0.5,

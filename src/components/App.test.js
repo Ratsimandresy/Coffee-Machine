@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import "@testing-library/jest-dom/extend-expect";
-import App from "./Index.jsx";
+import App from "./App";
 
 // const { commands } = require("../../assets/mock/mockData");
 
@@ -23,7 +23,7 @@ describe("Report button component", () => {
 
   test("should show information on click", () => {
     render(<App />);
-    const button = screen.getByRole("button");
+    const button = screen.getByTestId("new-btn");
 
     expect(button).toHaveTextContent("Make new command");
   });
