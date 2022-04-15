@@ -17,6 +17,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     price: null,
     isPrepared: false,
   };
+  let updatedStore;
 
   // instantiating services
   const translatorService = new DrinkMakerProtocolService();
@@ -43,7 +44,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
   const [price, setPrice] = useState(null);
   const [isPrepared, setIsPrepared] = useState(false);
   const [missingAmount, setMissingAmount] = useState(0);
-  const [store, setStore] = useState({});
+  const [store, setStore] = useState([]);
 
   // declaring some functions to handle component logic and render
   const generateDrinkMakerCommands = () => {
@@ -81,45 +82,19 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
       )
     );
   };
-  const saveStorage = (command, store = []) => {
-    let updatedStore = [...store];
-    let updateDrinkState = {};
-
-    const drinkStateInStore = updatedStore.find(
-      (drink) => drink.type === command.type
-    );
-
-    const { type, quantity } = drinkStateInStore;
-    const index = store.indexOf(drinkStateInStore);
-
-    switch (true) {
-      case quantity > 0:
-        updateDrinkState["type"] = type;
-        updateDrinkState["quantity"] = quantity - 1;
-        break;
-      case quantity === 0:
-        updateDrinkState = { ...drinkStateInStore };
-        break;
-      default:
-        break;
-    }
-
-    if (~index) {
-      updatedStore[index] = updateDrinkState;
-    }
-
-    return updatedStore;
-  };
 
   const handleAddCommand = (command, store) => {
+    updatedStore = updateStorage(command, store);
+    console.table(updatedStore);
+    setStore((prevStore) => [...prevStore, updatedStore]);
     setCommands((prevCommands) => [...prevCommands, command]);
-    setStore(saveStorage(command, store));
+
     console.table(store);
   };
 
   // updating states
   useEffect(() => {
-    setStore(getStorage(data.store));
+    setStore([...getStorage(data.store)]);
     generateDrinkMakerCommands();
     setPrice(getPrice(command.type));
     setMissingAmount(getMissingAmount(money, price));

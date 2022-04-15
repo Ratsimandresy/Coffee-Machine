@@ -20,31 +20,27 @@ export class StorageService {
   };
 
   updateStorage = (command, store = []) => {
-    let updatedStore = [...store];
-    let updateDrinkState = {};
+    let updatedStore;
+    let updatedDrinkState = {};
 
-    const drinkStateInStore = updatedStore.find(
-      (drink) => drink.type === command.type
-    );
+    const drinkStateInStore = [...store.filter((d) => d.type === command.type)];
+    const { quantity } = drinkStateInStore[0];
+    updatedDrinkState = { ...drinkStateInStore[0] };
+    console.log("drinkStateInStore ==>", drinkStateInStore);
 
-    const { type, quantity } = drinkStateInStore;
-    const index = store.indexOf(drinkStateInStore);
-
-    switch (true) {
-      case quantity > 0:
-        updateDrinkState["type"] = type;
-        updateDrinkState["quantity"] = quantity - 1;
-        break;
-      case quantity === 0:
-        updateDrinkState = { ...drinkStateInStore };
-        break;
-      default:
-        break;
+    if (quantity > 0) {
+      updatedDrinkState["quantity"] = quantity - 1;
     }
 
-    if (~index) {
-      updatedStore[index] = updateDrinkState;
-    }
+    console.log("updatedDrinkState ==>", updatedDrinkState);
+
+    updatedStore = [
+      ...store.map((d) => {
+        return d === drinkStateInStore[0] ? updatedDrinkState : d;
+      }),
+    ];
+
+    console.log("==>", updatedStore);
 
     return updatedStore;
   };
