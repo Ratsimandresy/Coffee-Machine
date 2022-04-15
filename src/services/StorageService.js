@@ -21,25 +21,22 @@ export class StorageService {
 
   updateStorage = (command, store = []) => {
     let updatedStore;
-    let updatedDrinkState = {};
 
-    const drinkStateInStore = [...store.filter((d) => d.type === command.type)];
-    const { quantity } = drinkStateInStore[0];
-    updatedDrinkState = { ...drinkStateInStore[0] };
-
-    if (quantity > 0) {
-      updatedDrinkState["quantity"] = quantity - 1;
-    }
-
-    updatedStore = [
-      ...store.map((d) => {
-        return d === drinkStateInStore[0] ? updatedDrinkState : d;
-      }),
-    ];
-
-    // updatedStore = store.map((d) =>
-    //   d.type === command.type ? (d["quantity"] -= 1) : d["quantity"]
-    // );
+    updatedStore = store.map((d) => {
+      const { type, quantity } = d;
+      if (d.type === command.type) {
+        switch (true) {
+          case quantity > 0:
+            return (d = { type, quantity: d.quantity - 1 });
+          case quantity === 0:
+            return d;
+          default:
+            break;
+        }
+      } else {
+        return d;
+      }
+    });
 
     return updatedStore;
   };

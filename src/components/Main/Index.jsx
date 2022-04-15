@@ -48,6 +48,7 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
 
   // declaring some functions to handle component logic and render
   const generateDrinkMakerCommands = () => {
+    setStore([...getStorage(data.store)]);
     setCommand((previousCommand) => ({
       ...previousCommand,
       type: `${drinkProtocolTranslator(drink, extraHot)}`,
@@ -87,13 +88,28 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
     updatedStore = updateStorage(command, store);
     // console.table(updatedStore);
     setStore((prevStore) => [...prevStore, updatedStore]);
-    setCommands((prevCommands) => [...prevCommands, command]);
+    setCommands([
+      store.map((d) => {
+        const { type, quantity } = d;
+        if (d.type === command.type) {
+          switch (true) {
+            case quantity > 0:
+              return (d = { type, quantity: d.quantity - 1 });
+            case quantity === 0:
+              return d;
+            default:
+              break;
+          }
+        } else {
+          return d;
+        }
+      }),
+    ]);
     // console.table(store);
   };
 
   // updating states
   useEffect(() => {
-    setStore([...getStorage(data.store)]);
     generateDrinkMakerCommands();
     setPrice(getPrice(command.type));
     setMissingAmount(getMissingAmount(money, price));
