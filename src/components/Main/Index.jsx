@@ -120,9 +120,11 @@ const Index = ({ currentOrder: { drink, sugarQuantity, money, extraHot } }) => {
           {message}
         </p>
       )}
-      <button role="button" onClick={() => handleAddCommand(command)}>
-        Send command
-      </button>
+      {isPrepared && (
+        <button role="button" onClick={() => handleAddCommand(command)}>
+          Send command
+        </button>
+      )}
     </div>
   );
 };

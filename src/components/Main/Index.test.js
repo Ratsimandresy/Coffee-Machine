@@ -33,23 +33,29 @@ describe("App component", () => {
 
   test("should render error message when drink doesn't exist", () => {
     render(<App currentOrder={order2} />);
+    const sendButton = screen.getByRole("button");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:This drink doesn't exist yet !"
     );
+    expect(sendButton).toBeFalsy();
   });
 
   test("should render error message when user exceeds sugar quantity", () => {
     render(<App currentOrder={order3} />);
+    const sendButton = screen.getByRole("button");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:Maximum sugar allowed !"
     );
+    expect(sendButton).toBeFalsy();
   });
 
   test("should render error message when user doesn't have enough money", () => {
     render(<App currentOrder={order4} />);
+    const sendButton = screen.getByRole("button");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       "M:Not enough money ! Please provide : 0.3€"
     );
+    expect(sendButton).toBeFalsy();
   });
 
   test("should show information on click", () => {

@@ -17,9 +17,10 @@ describe("Price service", () => {
     spy("getPrice");
     expect(service.getPrice("T")).toEqual(0.4);
     expect(service.getPrice("C")).toEqual(0.6);
+    expect(service.getPrice("Hh")).toEqual(0.5);
     expect(service.getPrice("M")).toBeFalsy();
 
-    expect(service.getPrice).toHaveBeenCalledTimes(3);
+    expect(service.getPrice).toHaveBeenCalledTimes(4);
   });
 
   it("should return the missing amount", () => {

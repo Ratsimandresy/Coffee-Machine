@@ -1,11 +1,14 @@
 export class PriceService {
   getPrice = (drinkType) => {
     switch (drinkType) {
-      case ("T", "Th"):
+      case "T":
+      case "Th":
         return 0.4;
-      case ("C", "Ch"):
+      case "C":
+      case "Ch":
         return 0.6;
-      case ("H", "Hh"):
+      case "H":
+      case "Hh":
         return 0.5;
       case "O":
         return 0.6;
